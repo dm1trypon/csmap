@@ -20,6 +20,9 @@ type CSMap[K comparable, V any] struct {
 
 // NewCSMap creates a new CSMap with the specified number of shards.
 func NewCSMap[K comparable, V any](length int) *CSMap[K, V] {
+	if length < 1 {
+		panic("invalid number of shards")
+	}
 	shards := make([]*Shard[K, V], length)
 	for i := 0; i < length; i++ {
 		shards[i] = &Shard[K, V]{
